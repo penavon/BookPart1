@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{5A3020F3-9DE8-4D13-B991-0CD0873FC5E6}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="CalculatorPlusProject.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="CalculatorPlusProject">
+        <MSBuild Projects="CalculatorPlusProject.dproj"/>
+    </Target>
+    <Target Name="CalculatorPlusProject:Clean">
+        <MSBuild Projects="CalculatorPlusProject.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CalculatorPlusProject:Make">
+        <MSBuild Projects="CalculatorPlusProject.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="CalculatorPlusProject"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="CalculatorPlusProject:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="CalculatorPlusProject:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

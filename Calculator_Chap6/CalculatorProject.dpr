@@ -1,5 +1,10 @@
 program calculatorProject;
 
+// Source code for chapter 6 and 7 for the book:
+
+// Writing an Interpreter in Object Pascal: Part 1
+
+
 {$APPTYPE CONSOLE}
 
 {$R *.res}
