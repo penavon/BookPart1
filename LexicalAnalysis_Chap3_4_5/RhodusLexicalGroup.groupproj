@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{13BAF6CE-4DEF-4B16-91E4-B002060D5334}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="ScannerGUIProject.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="consoleTestScanner.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ProjectDUnitXTest.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="REPL_Project_LexicalConsole.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ScannerGUIProject">
+        <MSBuild Projects="ScannerGUIProject.dproj"/>
+    </Target>
+    <Target Name="ScannerGUIProject:Clean">
+        <MSBuild Projects="ScannerGUIProject.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ScannerGUIProject:Make">
+        <MSBuild Projects="ScannerGUIProject.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="consoleTestScanner">
+        <MSBuild Projects="consoleTestScanner.dproj"/>
+    </Target>
+    <Target Name="consoleTestScanner:Clean">
+        <MSBuild Projects="consoleTestScanner.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="consoleTestScanner:Make">
+        <MSBuild Projects="consoleTestScanner.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ProjectDUnitXTest">
+        <MSBuild Projects="ProjectDUnitXTest.dproj"/>
+    </Target>
+    <Target Name="ProjectDUnitXTest:Clean">
+        <MSBuild Projects="ProjectDUnitXTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ProjectDUnitXTest:Make">
+        <MSBuild Projects="ProjectDUnitXTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="REPL_Project_LexicalConsole">
+        <MSBuild Projects="REPL_Project_LexicalConsole.dproj"/>
+    </Target>
+    <Target Name="REPL_Project_LexicalConsole:Clean">
+        <MSBuild Projects="REPL_Project_LexicalConsole.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="REPL_Project_LexicalConsole:Make">
+        <MSBuild Projects="REPL_Project_LexicalConsole.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ScannerGUIProject;consoleTestScanner;ProjectDUnitXTest;REPL_Project_LexicalConsole"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ScannerGUIProject:Clean;consoleTestScanner:Clean;ProjectDUnitXTest:Clean;REPL_Project_LexicalConsole:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ScannerGUIProject:Make;consoleTestScanner:Make;ProjectDUnitXTest:Make;REPL_Project_LexicalConsole:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

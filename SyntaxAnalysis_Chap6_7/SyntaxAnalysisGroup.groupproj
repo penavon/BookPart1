@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{36DB43D7-6584-411B-A222-A5AD5018D1B8}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="REPL_SyntaxAnalysis.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="REPL_SyntaxAnalysis">
+        <MSBuild Projects="REPL_SyntaxAnalysis.dproj"/>
+    </Target>
+    <Target Name="REPL_SyntaxAnalysis:Clean">
+        <MSBuild Projects="REPL_SyntaxAnalysis.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="REPL_SyntaxAnalysis:Make">
+        <MSBuild Projects="REPL_SyntaxAnalysis.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="REPL_SyntaxAnalysis"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="REPL_SyntaxAnalysis:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="REPL_SyntaxAnalysis:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
