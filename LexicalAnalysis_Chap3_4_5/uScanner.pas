@@ -9,7 +9,7 @@ unit uScanner;
 // Developed under Delphi for Windows and Mac platforms.
 // Ths source is distributed under Apache 2.0
 
-// Copyright (C) 1999-2018 Herbert M Sauro
+// Copyright (C) 1998-2018 Herbert M Sauro
 
 // Author Contact Information:
 // email: hsauro@gmail.com
@@ -42,31 +42,65 @@ unit uScanner;
 
 interface
 
-uses Windows, SysUtils, Classes, System.Character, Generics.Collections;
+uses Windows, SysUtils, Classes, Generics.Collections;
 
 type
   { ********************* Lexical scanner types etc *********************** }
   EScannerError = class (Exception);
 
-  TTokenCode = (tEMPTY, tIdentifier, tFloat, tInteger, tString,
-                tPlus, tMinus, tMult, tDivide, tPower, tDiv, tMod, tUnaryMinus,
-                tLessThan, tLessThanOrEqual, tMoreThan, tMoreThanOrEqual,
-                tNotEqual, tRightParenthesis, tLeftParenthesis,
-                tLeftBracket, tRightBracket,
-                tLeftCurleyBracket, tRightCurleyBracket,
-                tEquals, tEquivalence, tApostrophy,
-                tDollar, tSemicolon, tColon, tComma, tArrow,
-                tAnd, tOr, tNot, tXor, tEnd,
-                tEOL, tLineFeed, tEndofStream,
+  // List of tokens supported in Version one of Rhodus
+  TTokenCode = (tEndofStream,
+                tIdentifier,
+                tFloat,
+                tInteger,
+                tString,
+                tPlus,
+                tMinus,
+                tMult,
+                tDivide,
+                tPower,
+                tDiv,
+                tMod,
+                tLessThan,
+                tLessThanOrEqual,
+                tMoreThan,
+                tMoreThanOrEqual,
+                tNotEqual,
+                tRightParenthesis,
+                tLeftParenthesis,
+                tLeftBracket,
+                tRightBracket,
+                tLeftCurleyBracket,
+                tRightCurleyBracket,
+                tEquals,
+                tEquivalence,
+                tApostrophy,
+                tDollar,
+                tSemicolon,
+                tColon,
+                tComma,
+                tAnd,
+                tOr,
+                tNot,
+                tXor,
+                tEnd,
+                tIf,
+                tThen,
+                tElse,
+                tFalse,
+                tTrue,
+                tFor,
+                tDo,
+                tTo,
+                tDownTo,
+                tWhile,
+                tRepeat,
+                tUntil,
+                tOf,
+                tBreak,
+                tFunction);
 
-                tPrint,
-
-                tIf, tThen, tElse, tFalse, tTrue,
-                tFor, tDo, tTo, tDownTo, tWhile,
-                tRepeat, tUntil, tOf, tBreak, tFunction);
-
-  TTokenSet = set of TTokenCode;
-
+  // Information on a single token
   TTokenRecord = record
                     lineNumber, columnNumber : integer;
                     FToken        : TTokenCode;
@@ -80,7 +114,8 @@ type
                InMultiLineComment : Boolean;
 
                FTokenRecord : TTokenRecord;
-               Fch : Char;  // The current character read from the stream
+               // The current character read from the stream
+               Fch : Char;
 
                FKeyWordList : TStringList;
                FLineNumber : integer;
@@ -113,13 +148,16 @@ type
                destructor  destroy; override;
 
                procedure nextToken;
+
+               // Debuggin functions
                function  tokenToString : string; overload;
                function  tokenToString (tokenCode : TTokenCode) : string; overload;
                function  tokenLiteral : string;
-               function  getScalar : double;
 
                procedure scanString (str : string);
                procedure scanFile (Filename : string);
+               // Returns token value whether its an integer or double
+               function  getScalar : double;
                property  tokenRecord : TTokenRecord read FTokenRecord;
                property  token : TTokenCode read getTokenCode;
                property  tokenString : string read getTokenString;
@@ -134,11 +172,11 @@ Uses Math;
 
 const
   MAX_DIGIT_COUNT  = 3; // Max # of digits in exponent of floating point number
-  MAX_EXPONENT = 308;
-  TAB = #09;      // TAB key
-  LF = #10;       // Line feed character
-  CR = #13;       // Carriage return character
-  EOF_CHAR = Char ($FF);   // Defines end of string marker, used internally
+  MAX_EXPONENT = 308;   // Maximum size of exponent in sceintific notation
+  TAB = #09;            // TAB key
+  LF = #10;             // Line feed character
+  CR = #13;             // Carriage return character
+  EOF_CHAR = Char ($FF);// Defines end of string/file marker
 
 
 constructor TScanner.Create;
@@ -159,7 +197,7 @@ end;
 procedure TScanner.scanString (str : string);
 begin
   freeAndNil(yyReader);
-  // Use a reader because we'll have access to peek if we need it
+  // Use a reader because we'll have access to peek and endOfStream
   yyReader := TStreamReader.Create(TStringStream.Create (str, TEncoding.UTF8));
   yyReader.OwnStream;
   startScanner;
@@ -183,6 +221,7 @@ begin
 end;
 
 
+// Helper routines
 function TScanner.getTokenCode : TTokenCode;
 begin
   result := FTokenRecord.FToken;
@@ -204,7 +243,8 @@ begin
 end;
 
 
-// Some predefined keywords
+// Add the Rhodus supported keywords here
+// Could be refactored to use a TDictionary
 procedure TScanner.addKeyWords;
 begin
   FKeyWordList := TStringList.Create;
@@ -232,7 +272,6 @@ begin
   FKeyWordList.AddObject ('while', TObject (tWhile));
   FKeyWordList.AddObject ('until', TObject (tUntil));
   FKeyWordList.AddObject ('break', TObject (tBreak));
-  FKeyWordList.AddObject ('print', TObject (tPrint));
 
   FKeyWordList.AddObject ('repeat', TObject (tRepeat));
   FKeyWordList.AddObject ('downto', TObject (tDownTo));
@@ -243,6 +282,7 @@ begin
 end;
 
 
+// If a keyword is found, it returns the corresponding token in argument Token
 function TScanner.isKeyWord (FTokenString : string; var Token : TTokenCode) : boolean;
 var index : integer;
 begin
@@ -254,8 +294,7 @@ begin
      end;
 end;
 
-
-// get a single char from the input stream and convert any CRLF to LF
+// get a single char from the input stream
 function TScanner.readRawChar : Char;
 begin
   if yyReader = nil then
@@ -274,7 +313,7 @@ begin
 end;
 
 
-
+// get a single char from the readRawCjar and convert any CRLF to LF
 function TScanner.getOS_IndependentChar : Char;
 begin
   Fch:= readRawChar;
@@ -296,7 +335,7 @@ begin
 end;
 
 
-// Update ch to next character in input stream, filter out LF
+// Update Fch to the next character in input stream, filter out LF
 function TScanner.nextChar : Char;
 begin
   result := getOS_IndependentChar;
@@ -333,7 +372,7 @@ begin
      end;
 end;
 
-
+// Deal with this kind of comment  // ......
 procedure TScanner.skipSingleLineComment;
 begin
   while (Fch <> LF) and (FCh <> EOF_CHAR) do
@@ -343,7 +382,7 @@ begin
 end;
 
 
-// Skip blanks, null characters and tabs
+// Skip blanks, tabs and comments
 procedure TScanner.skipBlanksAndComments;
 begin
   while Fch in [' ', TAB, '/']  do
@@ -368,14 +407,13 @@ begin
 end;
 
 
-// Scan in a number token, will distinguish between integer and float
+// Scan in a number token, can distinguish between integer and float
 // (including scientific notation) Valid numbers include:
 // 23, 1.2, 0.3, .1234345, 1e3, 1e-6, 3.45667E-12
 // Note: negative numbers not supported here, instead the '-' sign is read
 // in as a separate token in its own right, therefore -1.2 yields two
-// tokens when scanned, tMinus followed by tFloat. To obtain the negative number
-// you would need to multiply TokenFloat by (-1). It was done this way so that
-// unary minuses in things such as "-(1.2)" could be handled.
+// tokens when scanned, tMinus followed by tFloat. It was done this way so that
+// unary minuses in things such as "-(1.2)" can be handled by the parser
 procedure TScanner.getNumber;
 var singleDigit : integer; scale : double;
     evalue : integer;
@@ -466,6 +504,7 @@ begin
 end;
 
 
+// Help routines to get an value whether its an integer or double.
 function TScanner.getScalar : double;
 begin
   result := 0.0;
@@ -499,6 +538,7 @@ begin
         Fch := nextchar;
         end;
 
+  // Check if word is a keyword
   if IsKeyWord (FTokenRecord.FTokenString, FTokenRecord.FToken) then
      FTokenRecord.FToken := FTokenRecord.FToken
   else
@@ -507,7 +547,7 @@ end;
 
 
 
-// Get a token of the form "abc"
+// Get a token of the form "A string"
 procedure TScanner.getString;
 begin
   FTokenRecord.FTokenString := '';
@@ -611,6 +651,7 @@ begin
 end;
 
 
+// Main pubic method that will be used by a parser
 procedure TScanner.nextToken;
 begin
   skipBlanksAndComments;
@@ -640,14 +681,12 @@ begin
 end;
 
 
+// --------------------------------------------------------------------
 
-{ -------------------------------------------------------------------- }
-{ Some debugging routines }
-
+// Some debugging routines
 function TScanner.TokenToString (tokenCode : TTokenCode) : string;
 begin
   case tokenCode of
-        tEmpty        : result := 'empty token';
         tIdentifier   : result := 'identifier <' + FTokenRecord.FTokenString + '>';
         tInteger      : result := 'integer <' + inttostr (FTokenRecord.FTokenInteger) + '>';
         tFloat        : result := 'float <' + floattostr (FTokenRecord.FTokenFloat) + '>';
@@ -674,7 +713,6 @@ begin
         tColon        : result := 'special: '':''';
         tComma        : result := 'special: '',''';
         tDollar       : result := 'special: ''$''';
-        tArrow        : result := 'special: ''->''';
              tEnd     : result := 'key word: <end>';
              tIf      : result := 'key word: <if>';
              tThen    : result := 'key word: <then> ';
@@ -685,17 +723,14 @@ begin
              tElse    : result := 'key word: <else>';
             tRepeat   : result := 'key word: <repeat>';
             tUntil    : result := 'key word: <until>';
-
-        tEOL         : result := 'End of Line';
-        tLineFeed    : result := 'LineFeed';
-        tEndofStream : result := 'End of Stream';
+        tEndofStream  : result := 'End of Stream';
   else
        result := 'unrecognised token in tokenToString: ' + inttostr (integer(tokenCode));
   end;
 end;
 
 
-{ Returns a string representation of the most recently read Token }
+// Returns a string representation of the most recently read Token
 function TScanner.TokenToString : string;
 begin
   Result := TokenToString (token);
@@ -705,7 +740,6 @@ end;
 function TScanner.TokenLiteral : string;
 begin
   case token of
-       tEmpty        : result := '';
        tIdentifier   : result := FTokenRecord.FTokenString;
        tInteger      : result := InttoStr (FTokenRecord.FTokenInteger);
        tFloat        : result := Format ('%g', [FTokenRecord.FTokenFloat]);
@@ -728,7 +762,6 @@ begin
        tColon      : result := ':';
        tComma      : result := ',';
        tDollar     : result := '$';
-       tArrow      : result := '->';
        tLessThan   : result := '<';
        tMoreThan   : result := '>';
             tEnd   : result := 'end';
@@ -745,7 +778,6 @@ begin
             tUntil : Result := 'until';
            tRepeat : Result := 'repeat';
 
-       tEOL        : result := 'End of Line';
    else
        result := 'unrecognised token in TokenLiteral';
   end;

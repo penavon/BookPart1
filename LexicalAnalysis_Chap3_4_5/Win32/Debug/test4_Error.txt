@@ -1,0 +1,2 @@
+print ("Test exponent overflow")
+a = 1234E567897

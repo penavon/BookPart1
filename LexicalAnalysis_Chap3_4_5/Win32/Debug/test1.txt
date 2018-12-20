@@ -1,0 +1,4 @@
+// test1.txt
+variable // Identifier 
+"string" // String
+12345    // Integer

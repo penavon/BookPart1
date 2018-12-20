@@ -22,7 +22,7 @@ object frmMain: TfrmMain
     Top = 32
     Width = 75
     Height = 25
-    Caption = 'Start'
+    Caption = 'Run Scanner'
     TabOrder = 0
     OnClick = btnStart1Click
   end
@@ -78,7 +78,7 @@ object frmMain: TfrmMain
     Top = 32
     Width = 75
     Height = 25
-    Caption = 'Start'
+    Caption = 'Run Scanner'
     TabOrder = 3
     OnClick = btnStart2Click
   end

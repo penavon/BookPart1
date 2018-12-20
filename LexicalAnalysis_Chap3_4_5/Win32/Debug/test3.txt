@@ -1,0 +1,6 @@
+// test3.txt
+variable "stri
+ng"
+"str
+  
+  ing"
