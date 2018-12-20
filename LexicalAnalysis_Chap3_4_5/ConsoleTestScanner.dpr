@@ -21,7 +21,16 @@ begin
       writeln ('Lexical analysis of file: ', fileName);
       writeln ('Test file contents:');
       writeln ('------------------------');
-      fileContents := TFile.ReadAllText(fileName);
+      try
+         fileContents := TFile.ReadAllText(fileName);
+      except
+       on e: Exception do
+          begin
+          writeln (fileName, ': ', e.message);
+          readln;
+          exit;
+          end;
+      end;
       writeln (fileContents);
       writeln ('------------------------');
 
