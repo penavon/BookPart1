@@ -1,9 +1,12 @@
 program CalculatorPlusProject;
 
-// Source code for chapter 8 for the book:
+// Source code for Chapter 8 for the book:
 
 // Writing an Interpreter in Object Pascal: Part 1
 
+// This uses a custom TScanner, slightly different from the
+// one described in Chapter 3. The one we use here supports
+// token lookahead.
 
 {$APPTYPE CONSOLE}
 
@@ -27,6 +30,9 @@ procedure displayWelcome;
 begin
   writeln ('Welcome to Rhodus Syntax Analysis Console, Version ', RHODUS_VERSION);
   writeln ('Data and Time: ', dateToStr (Date), ', ', timeToStr (Time));
+  writeln ('Supports assignment and expression, e.g');
+  writeln ('a = 3   b = a * 3.4   b+a');
+  writeln ('Type quit to exit');
 end;
 
 

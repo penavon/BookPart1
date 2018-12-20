@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<test-results name="U:\Delphi\Projects\LexicalAnalysis_Chap3_4_5\Win32\Debug\ProjectDUnitXTest.exe" total="70" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2018-12-20" time="0.013">
+  <culture-info current-culture="en" current-uiculture="en" />
+  <test-suite type="Assembly" name="ProjectDUnitXTest.exe" executed="true" result="Success" success="True" time="0.013" asserts="0">
+    <results>
+        <test-suite type="Namespace" name="uScannerUnitTest" executed="true" result="Success" success="True" time="0.013" asserts="0" >
+          <results>
+              <test-suite type="Fixture" name="TScannerTest" executed="True" result="Success" success="True" time="0.013" >
+                <results>
+                  <test-case name="TestSymbolRecognition.TestKeyWord1" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord2" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord3" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord4" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord5" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord6" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord7" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord8" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord9" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord10" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord11" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord12" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord13" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord14" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord15" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord16" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord17" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord18" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord19" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord20" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord21" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord22" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord23" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord24" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord25" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord26" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord27" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord28" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord27" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSymbolRecognition.TestKeyWord28" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestIdentifierScanning.TestIdent1" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestIdentifierScanning.TestIdent2" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestIdentifierScanning.TestIdent3" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestIdentifierScanning.TestIdent3" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestStringScanning.TestString" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestStringScanning.TestString" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestStringEscapeCharacters_Newline" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestStringEscapeCharacters_CR" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestStringEscapeCharacters_TAB" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestIntegerScanning.TestInteger1" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestIntegerScanning.TestInteger2" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestIntegerScanning.TestInteger3" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestIntOverflow" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestFloatingPoint.TestFloat1" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestFloatingPoint.TestFloat2" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestFloatingPoint.TestFloat3" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestFloatingPoint.TestFloat4" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestFloatingPoint.TestFloat5" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestFloatingPoint.TestFloat6" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestFloatingPoint.TestFloat6" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestFloatingPoint.TestFloat7" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestMissingExponent" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestExponentOverflow" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestExponentPeriod" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCRLF.TestCRLF1" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCRLF.TestCRLF2" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCRLF.TestCRLF3" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCRLF.TestCRLF4" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCRLFException1.TestCRLFExc" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCRLFException2.TestCRLFExc" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCRLFException3.TestCRLFExc" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestSequenceOfTokens" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestTabKeyInString" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestTwoNewlinesInString" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestOneLineCommentWithoutNewLine" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestOneLineComment" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestMultiLineCommentOnSameLine" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestMultiLineCommentOnMultipleLines" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestIllegalCharacter" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestNotEqualsToError" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                </results>
+              </test-suite>
+          </results>
+        </test-suite>
+    </results>
+  </test-suite>
+</test-results>

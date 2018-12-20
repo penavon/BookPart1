@@ -7,7 +7,8 @@ unit uScanner;
 // ------------------------------------------------------------------------
 
 // Developed under Delphi for Windows and Mac platforms.
-// Ths source is distributed under Apache 2.0
+
+// *** Ths source is distributed under Apache 2.0 ***
 
 // Copyright (C) 1998-2018 Herbert M Sauro
 
@@ -98,7 +99,9 @@ type
                 tUntil,
                 tOf,
                 tBreak,
-                tFunction);
+                tFunction,
+
+                tPrint);  // tPrint is a token used for testing
 
   // Information on a single token
   TTokenRecord = record
@@ -277,6 +280,8 @@ begin
   FKeyWordList.AddObject ('downto', TObject (tDownTo));
 
   FKeyWordList.AddObject ('function', TObject (tFunction));
+
+  FKeyWordList.AddObject ('print', TObject (tPrint));
 
   FKeyWordList.Sort;
 end;

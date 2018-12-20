@@ -1,5 +1,9 @@
 unit uSymbolTable;
 
+// A simple symbol table for Chapter 8 of the book:
+
+// Writing an Interpreter for Object Pascal, Part 1
+
 interface
 
 Uses Generics.Collections;

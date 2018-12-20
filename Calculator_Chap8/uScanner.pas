@@ -6,6 +6,9 @@ unit uScanner;
 // This version heavily modified: 15 Nov, 2018
 // ------------------------------------------------------------------------
 
+// This particular verison is written for the calculator project
+// describe in Chapter 8
+
 // Developed under Delphi for Windows and Mac platforms.
 // Ths source is distributed under Apache 2.0
 
@@ -39,7 +42,7 @@ unit uScanner;
       another line in the comment
    */
 
-   Look Ahead:
+   This version has special support for token look ahead:
 
    You can look ahead in the stream for the next token and put the token
    back into the stream using the token queue
@@ -53,22 +56,59 @@ type
   { ********************* Lexical scanner types etc *********************** }
   EScannerError = class (Exception);
 
-  TTokenCode = (tIdentifier, tFloat, tInteger, tString,
-                tPlus, tMinus, tMult, tDivide, tPower, tDiv, tMod, tUnaryMinus,
-                tLessThan, tLessThanOrEqual, tMoreThan, tMoreThanOrEqual,
-                tNotEqual, tRightParenthesis, tLeftParenthesis,
-                tLeftBracket, tRightBracket,
-                tLeftCurleyBracket, tRightCurleyBracket,
-                tEquals, tEquivalence, tApostrophy,
-                tDollar, tSemicolon, tColon, tComma, tArrow,
-                tAnd, tOr, tNot, tXor, tEnd,
-                tEOL, tLineFeed, tEndofStream,
+  TTokenCode = (tIdentifier,
+                tFloat,
+                tInteger,
+                tString,
+                tPlus,
+                tMinus,
+                tMult,
+                tDivide,
+                tPower,
+                tDiv, tMod,
+                tUnaryMinus,
+                tLessThan,
+                tLessThanOrEqual,
+                tMoreThan,
+                tMoreThanOrEqual,
+                tNotEqual,
+                tRightParenthesis,
+                tLeftParenthesis,
+                tLeftBracket,
+                tRightBracket,
+                tLeftCurleyBracket,
+                tRightCurleyBracket,
+                tEquals,
+                tEquivalence,
+                tApostrophy,
+                tDollar,
+                tSemicolon,
+                tColon,
+                tComma,
+                tArrow,
+                tAnd,
+                tOr,
+                tNot,
+                tXor,
+                tEnd,
+                tEndofStream,
 
                 tPrint,
 
-                tIf, tThen, tElse, tFalse, tTrue,
-                tFor, tDo, tTo, tDownTo, tWhile,
-                tRepeat, tUntil, tOf, tBreak, tFunction);
+                tIf,
+                tThen,
+                tElse,
+                tFalse, tTrue,
+                tFor,
+                tDo,
+                tTo,
+                tDownTo,
+                tWhile,
+                tRepeat,
+                tUntil,
+                tOf,
+                tBreak,
+                tFunction);
 
   TTokenSet = set of TTokenCode;
 
@@ -694,9 +734,6 @@ begin
              tElse    : result := 'key word: <else>';
             tRepeat   : result := 'key word: <repeat>';
             tUntil    : result := 'key word: <until>';
-
-        tEOL         : result := 'End of Line';
-        tLineFeed    : result := 'LineFeed';
         tEndofStream : result := 'End of Stream';
   else
        result := 'unrecognised token in tokenToString: ' + inttostr (integer(tokenCode));
@@ -752,8 +789,6 @@ begin
             tWhile : Result := 'while';
             tUntil : Result := 'until';
            tRepeat : Result := 'repeat';
-
-       tEOL        : result := 'End of Line';
    else
        result := 'unrecognised token in TokenLiteral';
   end;

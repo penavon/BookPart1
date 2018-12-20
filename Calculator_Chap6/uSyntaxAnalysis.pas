@@ -1,5 +1,23 @@
 unit uSyntaxAnalysis;
 
+// Syntax Parser for calculator project
+
+// Developed under Delphi for Windows and Mac platforms.
+
+// *** Ths source is distributed under Apache 2.0 ***
+
+// Copyright (C) 2018 Herbert M Sauro
+
+// Author Contact Information:
+// email: hsauro@gmail.com
+
+// Usage:
+//
+// sc := TScanner.Create;
+// sc.scanString ('a = 2; b = a + 5.6')
+// syntaxAnalyser := TSyntaxAnalysis.Create (sc);
+// syntaxAnalyzer.expression;
+
 interface
 
 Uses Classes,SysUtils, uScanner;
@@ -11,7 +29,6 @@ type
             procedure expect (thisToken : TTokenCode);
             function factor : double;
             function power : double;
-            function unaryTerm : double;
             function term : double;
           public
             function    expression : double;
@@ -40,6 +57,7 @@ begin
 end;
 
 
+// factor = integer | float | '(' expression ')'
 function TSyntaxAnalysis.factor : double;
 begin
   case sc.token of
@@ -56,8 +74,8 @@ begin
   end;
 end;
 
-// power = {'+' | '-'} factor [ '^' power ]
 
+// power = {'+' | '-'} factor [ '^' power ]
 function TSyntaxAnalysis.power : double;
 var sign : integer;
 begin
@@ -79,26 +97,7 @@ begin
 end;
 
 
-function TSyntaxAnalysis.unaryTerm : double;
-var sign: TTokenCode;
-begin
-  result := power;
-  exit;
-
-  if (sc.token = tPlus) or (sc.token = tMinus) then
-     begin
-     sign := sc.token;
-     sc.nextToken;
-     if sign = tMinus then
-        result := -power
-     else
-        result := power;
-     end
-  else
-     result := power;
-end;
-
-
+// term = power { ('*', '/') power }
 function TSyntaxAnalysis.term : double;
 begin
   result := power;
@@ -118,6 +117,7 @@ begin
 end;
 
 
+// expression = term { ('+', '-') power }
 function TSyntaxAnalysis.expression : double;
 begin
   result := term;

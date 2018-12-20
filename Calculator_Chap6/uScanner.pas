@@ -6,6 +6,8 @@ unit uScanner;
 // This version heavily modified: 15 Nov, 2018
 // ------------------------------------------------------------------------
 
+// This particular verison is written for the calculator project in second half of Chapter 6
+
 // Developed under Delphi for Windows and Mac platforms.
 // Ths source is distributed under Apache 2.0
 
@@ -39,7 +41,7 @@ unit uScanner;
       another line in the comment
    */
 
-   Look Ahead:
+   This version has special support for token look ahead:
 
    You can look ahead in the stream for the next token and put the token
    back into the stream using the token queue
@@ -53,22 +55,61 @@ type
   { ********************* Lexical scanner types etc *********************** }
   EScannerError = class (Exception);
 
-  TTokenCode = (tIdentifier, tFloat, tInteger, tString,
-                tPlus, tMinus, tMult, tDivide, tPower, tDiv, tMod, tUnaryMinus,
-                tLessThan, tLessThanOrEqual, tMoreThan, tMoreThanOrEqual,
-                tNotEqual, tRightParenthesis, tLeftParenthesis,
-                tLeftBracket, tRightBracket,
-                tLeftCurleyBracket, tRightCurleyBracket,
-                tEquals, tEquivalence, tApostrophy,
-                tDollar, tSemicolon, tColon, tComma, tArrow,
-                tAnd, tOr, tNot, tXor, tEnd,
-                tEOL, tLineFeed, tEndofStream,
+  TTokenCode = (tIdentifier,
+                tFloat,
+                tInteger,
+                tString,
+                tPlus,
+                tMinus,
+                tMult,
+                tDivide,
+                tPower,
+                tDiv,
+                tMod,
+                tUnaryMinus,
+                tLessThan,
+                tLessThanOrEqual,
+                tMoreThan,
+                tMoreThanOrEqual,
+                tNotEqual,
+                tRightParenthesis,
+                tLeftParenthesis,
+                tLeftBracket,
+                tRightBracket,
+                tLeftCurleyBracket,
+                tRightCurleyBracket,
+                tEquals,
+                tEquivalence,
+                tApostrophy,
+                tDollar,
+                tSemicolon,
+                tColon,
+                tComma,
+                tArrow,
+                tAnd,
+                tOr,
+                tNot,
+                tXor,
+                tEnd,
+                tEndofStream,
 
                 tPrint,
 
-                tIf, tThen, tElse, tFalse, tTrue,
-                tFor, tDo, tTo, tDownTo, tWhile,
-                tRepeat, tUntil, tOf, tBreak, tFunction);
+                tIf,
+                tThen,
+                tElse,
+                tFalse,
+                tTrue,
+                tFor,
+                tDo,
+                tTo,
+                tDownTo,
+                tWhile,
+                tRepeat,
+                tUntil,
+                tOf,
+                tBreak,
+                tFunction);
 
   TTokenSet = set of TTokenCode;
 
@@ -95,10 +136,14 @@ type
                yyReader : TStreamReader;
 
                procedure startScanner;
-               function  filterCRLF (fch : Char) : Char;
                procedure skipBlanksAndComments;
                procedure skipSingleLineComment;
                procedure skipMultiLIneComment;
+
+               function  readRawChar : Char;
+               function  getOS_IndependentChar : Char;
+               function  nextChar : Char;
+
                function  isLetter (ch : Char) : boolean;
                function  isDigit (ch : Char) : boolean;
                procedure getWord;
@@ -112,9 +157,6 @@ type
                function getTokenString : string;
                function getTokenInteger : integer;
                function getTokenDouble : double;
-
-               function  getChar : Char;
-               function  nextChar : Char;
              public
                constructor create;
                destructor  destroy; override;
@@ -266,29 +308,8 @@ begin
 end;
 
 
-// Turns CRLF to LF and LF to LF
-function TScanner.filterCRLF (Fch : Char) : Char;
-begin
-  if (Fch = CR) or (Fch = LF) then
-     begin
-     if Fch = CR then
-        begin
-        Fch := getChar;
-        if Fch = LF then
-           result := Fch
-        else
-           raise EScannerError.Create ('expecting line feed character');
-        end
-     else
-        result := FCh;
-     end
-  else
-     result := FCh;
-end;
-
-
-// get a single char from the input stream, filter out CRFL to LF
-function TScanner.getChar : Char;
+// get a single char from the input stream
+function TScanner.readRawChar : Char;
 begin
   if yyReader = nil then
      exit (char (EOF_CHAR));
@@ -302,17 +323,38 @@ begin
      begin
      inc (FColumnNumber);
      result := Char (yyReader.Read);
-     result := filterCRLF (result);
      end;
 end;
 
 
-// Update ch to next character in input stream, filter out LF
+// get a single char from the readRawCjar and convert any CRLF to LF
+function TScanner.getOS_IndependentChar : Char;
+begin
+  Fch:= readRawChar;
+  if (Fch = CR) or (Fch = LF) then
+     begin
+     if Fch = CR then
+        begin
+        Fch := readRawChar;
+        if Fch = LF then
+           result := Fch
+        else
+           raise EScannerError.Create ('expecting line feed character');
+        end
+     else
+        result := FCh;
+     end
+  else
+     result := FCh;
+end;
+
+
+// Update Fch to the next character in input stream, filter out LF
 function TScanner.nextChar : Char;
 begin
-  result := getChar;
+  result := getOS_IndependentChar;
   // Ignore LF and return the next character
-  while result = LF do
+  if result = LF then
         begin
         inc (FLineNumber);
         FColumnNumber := 0;
@@ -348,7 +390,7 @@ end;
 procedure TScanner.skipSingleLineComment;
 begin
   while (Fch <> LF) and (FCh <> EOF_CHAR) do
-        Fch := getChar;
+        Fch := getOS_IndependentChar;
   if FCh <> EOF_CHAR then
      Fch := nextChar;
 end;
@@ -366,7 +408,7 @@ begin
            // Check for start of comment
            if (char (yyReader.Peek) = '/') or (char (yyReader.Peek) = '*') then
               begin
-              Fch := getChar;
+              Fch := getOS_IndependentChar;
               if Fch = '/' then // This kind of comment  // abc - single line
                  skipSingleLineComment
               else if Fch = '*' then // This kind of comment: /* abc */ - multiline
@@ -697,8 +739,6 @@ begin
             tRepeat   : result := 'key word: <repeat>';
             tUntil    : result := 'key word: <until>';
 
-        tEOL         : result := 'End of Line';
-        tLineFeed    : result := 'LineFeed';
         tEndofStream : result := 'End of Stream';
   else
        result := 'unrecognised token in tokenToString: ' + inttostr (integer(tokenCode));
@@ -754,8 +794,6 @@ begin
             tWhile : Result := 'while';
             tUntil : Result := 'until';
            tRepeat : Result := 'repeat';
-
-       tEOL        : result := 'End of Line';
    else
        result := 'unrecognised token in TokenLiteral';
   end;

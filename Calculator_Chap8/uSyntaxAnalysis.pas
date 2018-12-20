@@ -1,5 +1,16 @@
 unit uSyntaxAnalysis;
 
+// Syntax Parser for calculator project, Chapter 8
+
+// Developed under Delphi for Windows and Mac platforms.
+
+// *** Ths source is distributed under Apache 2.0 ***
+
+// Copyright (C) 2018 Herbert M Sauro
+
+// Author Contact Information:
+// email: hsauro@gmail.com
+
 interface
 
 Uses Classes,SysUtils, uScanner, uSymbolTable;
@@ -12,12 +23,10 @@ type
             procedure expect (thisToken : TTokenCode);
             function  factor : double;
             function  power : double;
-            function  unaryTerm : double;
             function  term : double;
             procedure assignment (variableName : string);
           public
             procedure   statement;
-            procedure   statement2;
             function    expression : double;
             constructor Create (sc : TScanner);
    end;
@@ -44,6 +53,8 @@ begin
 end;
 
 
+// Given the name of the symbol, return its value
+// If the symbol cannot be found raise an exception.
 function TSyntaxAnalysis.getIdentifierValue (name : string) : double;
 begin
    sc.nextToken;
@@ -54,6 +65,7 @@ begin
 end;
 
 
+// factor = integer | float | identifier | '(' expression ')'
 function TSyntaxAnalysis.factor : double;
 begin
   case sc.token of
@@ -72,7 +84,6 @@ begin
 end;
 
 // power = {'+' | '-'} factor [ '^' power ]
-
 function TSyntaxAnalysis.power : double;
 var sign : integer;
 begin
@@ -94,26 +105,7 @@ begin
 end;
 
 
-function TSyntaxAnalysis.unaryTerm : double;
-var sign: TTokenCode;
-begin
-  result := power;
-  exit;
-
-  if (sc.token = tPlus) or (sc.token = tMinus) then
-     begin
-     sign := sc.token;
-     sc.nextToken;
-     if sign = tMinus then
-        result := -power
-     else
-        result := power;
-     end
-  else
-     result := power;
-end;
-
-
+// term = power { ( '*', '/') power }
 function TSyntaxAnalysis.term : double;
 begin
   result := power;
@@ -132,7 +124,7 @@ begin
        end;
 end;
 
-
+// expression = term { ( '+', '0-') expression }
 function TSyntaxAnalysis.expression : double;
 begin
   result := term;
@@ -152,6 +144,7 @@ begin
 end;
 
 
+// assignment = expression
 procedure TSyntaxAnalysis.assignment (variableName : string);
 var value : double;
 begin
@@ -162,7 +155,7 @@ begin
      symbolTable.Add (variableName, value);
 end;
 
-
+// statement = assignment | expression
 procedure TSyntaxAnalysis.statement;
 var token1, token2 : TTokenElement;
 begin
@@ -188,26 +181,6 @@ begin
      writeln (expression:10:6);
      end;
 end;
-
-
-procedure TSyntaxAnalysis.statement2;
-var token1, token2 : TTokenElement;
-begin
-  sc.nextToken;
-  if sc.token = tEquals then
-     begin
-     sc.nextToken;
-     expression;
-     end
-  else
-     begin
-     sc.pushBackToken(token1);
-     sc.pushBackToken(token2);
-     sc.nextToken;
-     writeln (expression:10:6);
-     end;
-end;
-
 
 
 end.

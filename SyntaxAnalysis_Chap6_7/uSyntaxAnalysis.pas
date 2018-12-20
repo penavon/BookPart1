@@ -1,5 +1,25 @@
 unit uSyntaxAnalysis;
 
+// Initial Syntax Parser  for Rhodus Verison One
+// The code illustrates how to supprt basic expression parsing
+
+// Developed under Delphi for Windows and Mac platforms.
+
+// *** Ths source is distributed under Apache 2.0 ***
+
+// Copyright (C) 2018 Herbert M Sauro
+
+// Author Contact Information:
+// email: hsauro@gmail.com
+
+// Usage:
+//
+// sc := TScanner.Create;
+// sc.scanString ('a = 2; b = a + 5.6')
+// syntaxAnalyser := TSyntaxAnalysis.Create (sc);
+// syntaxAnalyzer.myProgram;
+
+
 interface
 
 Uses Classes,SysUtils, uScanner;
@@ -17,7 +37,7 @@ type
             procedure assignment;
             procedure printExpression;
           public
-            procedure myProgram;
+            procedure   myProgram;
             constructor Create (sc : TScanner);
    end;
 
@@ -40,16 +60,7 @@ begin
 end;
 
 
-procedure TSyntaxAnalysis.expression;
-begin
-  term;
-  while sc.token in [tPlus, tMinus] do
-       begin
-       sc.nextToken;
-       term;
-       end;
-end;
-
+// factor = integer | float | identifier | '(' expression ')'
 procedure TSyntaxAnalysis.factor;
 begin
   case sc.token of
@@ -67,6 +78,8 @@ begin
   end;
 end;
 
+
+// term = factor { ('*', '\') factor }
 procedure TSyntaxAnalysis.term;
 begin
   factor;
@@ -77,6 +90,18 @@ begin
        end;
 end;
 
+// term = term { ('+', '-') term }
+procedure TSyntaxAnalysis.expression;
+begin
+  term;
+  while sc.token in [tPlus, tMinus] do
+       begin
+       sc.nextToken;
+       term;
+       end;
+end;
+
+// assignment = identifier '=' expression
 procedure TSyntaxAnalysis.assignment;
 begin
   expect (tIdentifier);
@@ -85,13 +110,14 @@ begin
 end;
 
 
+// printExpression = expression
 procedure TSyntaxAnalysis.printExpression;
 begin
   sc.nextToken;
   expression;
 end;
 
-
+// myProgram = identifier | print
 procedure TSyntaxAnalysis.myProgram;
 begin
   sc.nextToken;
