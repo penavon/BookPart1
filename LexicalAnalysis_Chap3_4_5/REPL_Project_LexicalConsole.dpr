@@ -18,6 +18,7 @@ procedure displayWelcome;
 begin
   writeln ('Welcome to Rhodus Lexical Analysis Console, Version ', RHODUS_VERSION);
   writeln ('Data and Time: ', dateToStr (Date), ', ', timeToStr (Time));
+  writeln ('Type quit to exit');
 end;
 
 procedure displayPrompt;
