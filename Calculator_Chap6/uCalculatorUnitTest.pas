@@ -60,13 +60,18 @@ type
     [TestCase('Test40','2---3,-1')]
     [TestCase('Test41','2---3^4,-79')]
     [TestCase('Test42','2*-(1+2)^-(2+5*-(2+4)),-4.5753584909922e+13')]
-    [TestCase('Test43','2//,2')]
+    [TestCase('Test43','2//4,2')]
     procedure TestCalculator( const sourceCode : string; const expectedResult : double);
     [Test]
-    procedure TestDivideByZero;
+    procedure TestDivideByZero; // 1/0
     [Test]
-    procedure TestUnbalancedParentheses;
-
+    procedure TestUnbalancedParentheses;  // (0
+    [Test]
+    procedure Test_two_stars;  // 2**3
+    [Test]
+    procedure Test_two_hats;  // 2^^3
+    [Test]
+    procedure Test_two_3_;    // 2-3-
   end;
 
 implementation
@@ -95,7 +100,6 @@ end;
 
 
 procedure TCalculatorTest.TestDivideByZero ;
-var value : double;
 begin
   sc.scanString('1/0');
   Assert.WillRaise(procedure begin sc.nextToken; sy.expression; end, EZeroDivide, 'Divide by zero');
@@ -103,10 +107,29 @@ end;
 
 
 procedure TCalculatorTest.TestUnbalancedParentheses;
-var value : double;
 begin
   sc.scanString('(0');
   Assert.WillRaise(procedure begin sc.nextToken; sy.expression; end, ESyntaxException, 'Unbalanced parenthesis');
+end;
+
+
+procedure TCalculatorTest.Test_two_stars;
+begin
+  sc.scanString('2**3');
+  Assert.WillRaise(procedure begin sc.nextToken; sy.expression; end, ESyntaxException, 'Unexpected double **');
+end;
+
+
+procedure TCalculatorTest.Test_two_hats;
+begin
+  sc.scanString('2^^3');
+  Assert.WillRaise(procedure begin sc.nextToken; sy.expression; end, ESyntaxException, 'Unexpected double ^^');
+end;
+
+procedure TCalculatorTest.Test_two_3_;
+begin
+  sc.scanString('2-3-');
+  Assert.WillRaise(procedure begin sc.nextToken; sy.expression; end, ESyntaxException, 'Unexpected double ^^');
 end;
 
 

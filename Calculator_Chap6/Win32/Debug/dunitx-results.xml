@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<test-results name="U:\Delphi\Projects\Calculator_Chap6\Win32\Debug\ProjectUnitCalculatorTest.exe" total="48" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2018-12-18" time="0.007">
+  <culture-info current-culture="en" current-uiculture="en" />
+  <test-suite type="Assembly" name="ProjectUnitCalculatorTest.exe" executed="true" result="Success" success="True" time="0.007" asserts="0">
+    <results>
+        <test-suite type="Namespace" name="uCalculatorUnitTest" executed="true" result="Success" success="True" time="0.006" asserts="0" >
+          <results>
+              <test-suite type="Fixture" name="TCalculatorTest" executed="True" result="Success" success="True" time="0.006" >
+                <results>
+                  <test-case name="TestCalculator.Test1" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test2" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test3" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test4" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test5" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test6" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test7" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test8" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test9" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test10" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test11" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test12" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test13" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test14" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test15" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test16" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test17" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test18" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test19" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test20" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test21" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test22" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test23" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test24" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test25" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test26" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test27" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test28" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test29" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test31" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test31" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test32" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test33" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test34" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test35" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test36" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test37" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test38" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test39" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test40" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                  <test-case name="TestCalculator.Test41" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test42" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test43" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestDivideByZero" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestUnbalancedParentheses" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_two_stars" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_two_hats" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_two_3_" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                </results>
+              </test-suite>
+          </results>
+        </test-suite>
+    </results>
+  </test-suite>
+</test-results>

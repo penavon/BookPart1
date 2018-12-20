@@ -5,10 +5,12 @@ interface
 Uses Classes,SysUtils, uScanner;
 
 type
+   ESyntaxError = class (Exception);
+
    TSyntaxAnalysis = class (TObject)
          private
             sc : TScanner;
-            procedure expect (thisToken : TTokenCode);
+            procedure expect (expectedToken : TTokenCode);
             procedure expression;
             procedure factor;
             procedure term;
@@ -21,6 +23,7 @@ type
 
 implementation
 
+
 constructor TSyntaxAnalysis.Create (sc : TScanner);
 begin
   inherited Create;
@@ -28,12 +31,12 @@ begin
 end;
 
 
-procedure TSyntaxAnalysis.expect (thisToken : TTokenCode);
+procedure TSyntaxAnalysis.expect (expectedToken : TTokenCode);
 begin
-  if sc.token <> thisToken then
-     raise Exception.Create('expecting: ' + sc.tokenToString (thisToken))
+  if sc.token = expectedToken then
+     sc.nextToken
   else
-     sc.nextToken;
+     raise ESyntaxError.Create('expecting: ' + sc.tokenToString (expectedToken));
 end;
 
 
@@ -60,7 +63,7 @@ begin
          expect (tRightParenthesis);
          end;
   else
-     raise Exception.Create('expecting identifier, scalar or left parentheses');
+     raise ESyntaxError.Create('expecting identifier, scalar or left parentheses');
   end;
 end;
 
@@ -96,7 +99,7 @@ begin
      tIdentifier : assignment;
      tPrint      : printExpression
   else
-     raise Exception.Create('expecting assignment or print statement');
+     raise ESyntaxError.Create('expecting assignment or print statement');
   end;
 end;
 

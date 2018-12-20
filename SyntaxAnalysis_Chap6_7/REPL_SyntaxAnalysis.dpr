@@ -53,7 +53,7 @@ begin
            try
              sy.myProgram;
            except
-             on e:exception do
+             on e:Exception do
                 writeln ('Error: ' + e.Message);
            end;
            end;

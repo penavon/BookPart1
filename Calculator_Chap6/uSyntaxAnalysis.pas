@@ -52,7 +52,7 @@ begin
          expect (tRightParenthesis);
          end;
   else
-     raise Exception.Create('expecting scalar or left parentheses');
+     raise ESyntaxException.Create('expecting scalar or left parentheses');
   end;
 end;
 
