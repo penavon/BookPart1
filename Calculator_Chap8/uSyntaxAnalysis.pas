@@ -157,7 +157,7 @@ end;
 
 // statement = assignment | expression
 procedure TSyntaxAnalysis.statement;
-var token1, token2 : TTokenElement;
+var token1, token2 : TTokenRecord;
 begin
   token1 := sc.tokenElement;
   sc.nextToken;

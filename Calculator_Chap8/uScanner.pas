@@ -112,7 +112,7 @@ type
 
   TTokenSet = set of TTokenCode;
 
-  TTokenElement = record
+  TTokenRecord = record
                     lineNumber, columnNumber : integer;
                     FToken        : TTokenCode;
                     FTokenString  : string;
@@ -122,10 +122,10 @@ type
 
   TScanner = class (TObject)
             private
-               tokenQueue : TQueue<TTokenElement>;
+               tokenQueue : TQueue<TTokenRecord>;
                InMultiLineComment : Boolean;
 
-               FTokenElement : TTokenElement;
+               FTokenRecord : TTokenRecord;
                Fch : Char;  // The current character read from the stream
 
                FKeyWordList : TStringList;
@@ -159,7 +159,7 @@ type
                destructor  destroy; override;
 
                procedure nextToken;
-               procedure pushBackToken (token : TTokenElement);
+               procedure pushBackToken (token : TTokenRecord);
                function  tokenToString : string; overload;
                function  tokenToString (tokenCode : TTokenCode) : string; overload;
                function  tokenLiteral : string;
@@ -167,7 +167,7 @@ type
 
                procedure scanString (str : string);
                procedure scanFile (Filename : string);
-               property  tokenElement : TTokenElement read FTokenElement;
+               property  tokenElement : TTokenRecord read FTokenRecord;
                property  token : TTokenCode read getTokenCode;
                property  tokenString : string read getTokenString;
                property  tokenInteger : integer read getTokenInteger;
@@ -192,7 +192,7 @@ constructor TScanner.Create;
 begin
   inherited Create;
   addKeyWords;
-  tokenQueue := TQueue<TTokenElement>.Create;  //  Use to push token back into the stream
+  tokenQueue := TQueue<TTokenRecord>.Create;  //  Use to push token back into the stream
 end;
 
 
@@ -234,22 +234,22 @@ end;
 
 function TScanner.getTokenCode : TTokenCode;
 begin
-  result := FTokenElement.FToken;
+  result := FTokenRecord.FToken;
 end;
 
 function TScanner.getTokenString: string;
 begin
-  result := FTokenElement.FTokenString;
+  result := FTokenRecord.FTokenString;
 end;
 
 function TScanner.getTokenInteger : integer;
 begin
-  result := FTokenElement.FTokenInteger;
+  result := FTokenRecord.FTokenInteger;
 end;
 
 function TScanner.getTokenDouble: double;
 begin
-  result := FTokenElement.FTokenFloat;
+  result := FTokenRecord.FTokenFloat;
 end;
 
 
@@ -429,50 +429,59 @@ procedure TScanner.getNumber;
 var singleDigit : integer; scale : double;
     evalue : integer;
     exponentSign : integer;
-    cutOff : integer;
+    hasLeftHandSide, hasRightHandSide : boolean;
 begin
-  FTokenElement.FTokenInteger := 0; FTokenElement.FTokenFloat := 0.0;
+  FTokenRecord.FTokenInteger := 0; FTokenRecord.FTokenFloat := 0.0;
+  hasLeftHandSide := False; hasRightHandSide := False;
 
   // Assume it's an integer
-  FTokenElement.FToken := tINTEGER;
+  FTokenRecord.FToken := tINTEGER;
   // check for decimal point just in case user has typed something like .5
   if Fch <> '.' then
+     begin
+     hasLeftHandSide := True;
      repeat
        singleDigit := ord (Fch) - ord ('0');
-       if FTokenElement.FTokenInteger <= (MaxInt - singleDigit) div 10 then
+       if FTokenRecord.FTokenInteger <= (MaxInt - singleDigit) div 10 then
           begin
-          FTokenElement.FTokenInteger := 10*FTokenElement.FTokenInteger + singleDigit;
+          FTokenRecord.FTokenInteger := 10*FTokenRecord.FTokenInteger + singleDigit;
           Fch := nextchar;
           end
        else
          raise EScannerError.Create ('integer overflow, constant value too large to read');
      until not isDigit (FCh);
+     end;
 
   scale := 1;
   if Fch = '.' then
      begin
      // Then it's a float. Start collecting fractional part
-     FTokenElement.FToken := tFLOAT; FTokenElement.FTokenFloat := FTokenElement.FTokenInteger;
+     FTokenRecord.FToken := tFLOAT; FTokenRecord.FTokenFloat := FTokenRecord.FTokenInteger;
      Fch := nextchar;
+     if isDigit (FCh) then hasRightHandSide := True;
 
      while isDigit (FCh) do
         begin
         scale := scale * 0.1;
         singleDigit := ord (Fch) - ord ('0');
-        FTokenElement.FTokenFloat := FTokenElement.FTokenFloat + (singleDigit * scale);
+        FTokenRecord.FTokenFloat := FTokenRecord.FTokenFloat + (singleDigit * scale);
         Fch := nextchar;
         end;
      end;
+
+  // Check there is actually a number
+  if (hasLeftHandSide = False) and (hasRightHandSide = False) then
+     raise EScannerError.Create ('single period on its own is not a valid number');
 
    exponentSign := 1;
   // Next check for scientific notation
   if (Fch = 'e') or (Fch = 'E') then
      begin
      // Then it's a float. Start collecting exponent part
-     if FTokenElement.FToken = tInteger then
+     if FTokenRecord.FToken = tInteger then
         begin
-        FTokenElement.FToken := tFLOAT;
-        FTokenElement.FTokenFloat := FTokenElement.FTokenInteger;
+        FTokenRecord.FToken := tFLOAT;
+        FTokenRecord.FTokenFloat := FTokenRecord.FTokenInteger;
         end;
      Fch := nextchar;
      if (Fch = '-') or (Fch = '+') then
@@ -483,7 +492,6 @@ begin
      { accumulate exponent, check that first ch is a digit }
      if not isDigit (Fch) then
         raise EScannerError.Create ('syntax error: number expected in exponent');
-
 
      evalue := 0;
      repeat
@@ -499,20 +507,21 @@ begin
 
      evalue := evalue * exponentSign;
      if token = tInteger then
-        FTokenElement.FTokenFloat := FTokenElement.FTokenInteger * Math.IntPower (10, evalue)
+        FTokenRecord.FTokenFloat := FTokenRecord.FTokenInteger * Math.IntPower (10, evalue)
      else
-        FTokenElement.FTokenFloat := FTokenElement.FTokenFloat * Math.Power (10.0, evalue);
+        FTokenRecord.FTokenFloat := FTokenRecord.FTokenFloat * Math.Power (10.0, evalue);
      end;
 end;
+
 
 
 function TScanner.getScalar : double;
 begin
   result := 0.0;
-  if (FTokenElement.FToken = tInteger) then
-     result := FTokenElement.FTokenInteger;
-  if (FTokenElement.FToken = tFloat) then
-     result := FTokenElement.FTokenFloat;
+  if (FTokenRecord.FToken = tInteger) then
+     result := FTokenRecord.FTokenInteger;
+  if (FTokenRecord.FToken = tFloat) then
+     result := FTokenRecord.FTokenFloat;
 end;
 
 
@@ -531,18 +540,18 @@ end;
 // Scan in an identifier token
 procedure TScanner.getWord;
 begin
-  FTokenElement.FTokenString := '';
+  FTokenRecord.FTokenString := '';
 
   while isLetter (Fch) or isDigit (Fch) do
         begin
-        FTokenElement.FTokenString := FTokenElement.FTokenString + Fch;  // Inefficient but convenient
+        FTokenRecord.FTokenString := FTokenRecord.FTokenString + Fch;  // Inefficient but convenient
         Fch := nextchar;
         end;
 
-  if IsKeyWord (FTokenElement.FTokenString, FTokenElement.FToken) then
-     FTokenElement.FToken := FTokenElement.FToken
+  if IsKeyWord (FTokenRecord.FTokenString, FTokenRecord.FToken) then
+     FTokenRecord.FToken := FTokenRecord.FToken
   else
-     FTokenElement.FToken := tIdentifier;
+     FTokenRecord.FToken := tIdentifier;
 end;
 
 
@@ -550,8 +559,8 @@ end;
 // Get a token of the form "abc"
 procedure TScanner.getString;
 begin
-  FTokenElement.FTokenString := '';
-  FTokenElement.FToken := tString;
+  FTokenRecord.FTokenString := '';
+  FTokenRecord.FToken := tString;
 
   Fch := nextChar;
   while Fch <> EOF_CHAR do
@@ -560,12 +569,12 @@ begin
            begin
            Fch := nextChar;
            case Fch of
-               '\' : FTokenElement.FTokenString := FTokenElement.FTokenString + '\';
-               'n' : FTokenElement.FTokenString := FTokenElement.FTokenString + sLineBreak;
-               'r' : FTokenElement.FTokenString := FTokenElement.FTokenString + CR;
-               't' : FTokenElement.FTokenString := FTokenElement.FTokenString + TAB;
+               '\' : FTokenRecord.FTokenString := FTokenRecord.FTokenString + '\';
+               'n' : FTokenRecord.FTokenString := FTokenRecord.FTokenString + sLineBreak;
+               'r' : FTokenRecord.FTokenString := FTokenRecord.FTokenString + CR;
+               't' : FTokenRecord.FTokenString := FTokenRecord.FTokenString + TAB;
             else
-               FTokenElement.FTokenString := FTokenElement.FTokenString + '\' + Fch;
+               FTokenRecord.FTokenString := FTokenRecord.FTokenString + '\' + Fch;
             end;
             Fch := nextChar;
            end
@@ -578,7 +587,7 @@ begin
               end
            else
               begin
-              FTokenElement.FTokenString := FTokenElement.FTokenString + Fch;
+              FTokenRecord.FTokenString := FTokenRecord.FTokenString + Fch;
               Fch := nextChar;
               end
            end;
@@ -591,19 +600,19 @@ end;
 procedure TScanner.getSpecial;
 begin
   case Fch of
-     '+'  : FTokenElement.Ftoken := tPlus;
-     '^'  : FTokenElement.Ftoken := tPower;
-     '('  : FTokenElement.Ftoken := tLeftParenthesis;
-     ')'  : FTokenElement.Ftoken := tRightParenthesis;
-     '['  : FTokenElement.Ftoken := tLeftBracket;
-     ']'  : FTokenElement.Ftoken := tRightBracket;
-     '{'  : FTokenElement.Ftoken := tLeftCurleyBracket;
-     '}'  : FTokenElement.Ftoken := tRightCurleyBracket;
+     '+'  : FTokenRecord.Ftoken := tPlus;
+     '^'  : FTokenRecord.Ftoken := tPower;
+     '('  : FTokenRecord.Ftoken := tLeftParenthesis;
+     ')'  : FTokenRecord.Ftoken := tRightParenthesis;
+     '['  : FTokenRecord.Ftoken := tLeftBracket;
+     ']'  : FTokenRecord.Ftoken := tRightBracket;
+     '{'  : FTokenRecord.Ftoken := tLeftCurleyBracket;
+     '}'  : FTokenRecord.Ftoken := tRightCurleyBracket;
      '!'  : begin
             if Char (yyReader.Peek) = '=' then
                begin
                Fch := nextChar;
-               FTokenElement.Ftoken := tNotEqual;
+               FTokenRecord.Ftoken := tNotEqual;
                end
             else
               raise EScannerError.Create ('unexpecting ''='' character after explanation point: ' + Fch);
@@ -612,38 +621,38 @@ begin
             if  Char (yyReader.Peek) = '=' then
                begin
                Fch := nextChar;
-               FTokenElement.Ftoken := tMoreThanOrEqual;
+               FTokenRecord.Ftoken := tMoreThanOrEqual;
                end
             else
-               FTokenElement.Ftoken := tMoreThan;
+               FTokenRecord.Ftoken := tMoreThan;
             end;
 
      '<'  : begin
             if Char (yyReader.Peek) = '=' then
                begin
                Fch := nextChar;
-               FTokenElement.Ftoken := tLessThanOrEqual;
+               FTokenRecord.Ftoken := tLessThanOrEqual;
                end
             else
-               FTokenElement.Ftoken := tLessThan;
+               FTokenRecord.Ftoken := tLessThan;
             end;
 
        '='  : begin
             if Char (yyReader.Peek) = '=' then
                begin
                Fch := nextChar;
-               FTokenElement.Ftoken := tEquivalence;
+               FTokenRecord.Ftoken := tEquivalence;
                end
             else
-               FTokenElement.Ftoken := tEquals;
+               FTokenRecord.Ftoken := tEquals;
             end;
-     ';'  : FTokenElement.Ftoken := tSemicolon;
-     ':'  : FTokenElement.Ftoken := tColon;
-     ','  : FTokenElement.Ftoken := tComma;
-     '''' : FTokenElement.Ftoken := tApostrophy;
-     '-'  : FTokenElement.Ftoken := tMinus;
-     '/'  : FTokenElement.Ftoken := tDivide;
-     '*'  : FTokenElement.Ftoken := tMult;
+     ';'  : FTokenRecord.Ftoken := tSemicolon;
+     ':'  : FTokenRecord.Ftoken := tColon;
+     ','  : FTokenRecord.Ftoken := tComma;
+     '''' : FTokenRecord.Ftoken := tApostrophy;
+     '-'  : FTokenRecord.Ftoken := tMinus;
+     '/'  : FTokenRecord.Ftoken := tDivide;
+     '*'  : FTokenRecord.Ftoken := tMult;
   else
      raise EScannerError.Create ('unrecongnised character in source coude: ' + Fch);
   end;
@@ -655,15 +664,15 @@ procedure TScanner.nextToken;
 begin
   if tokenQueue.Count > 0 then
      begin
-     FTokenElement := tokenQueue.Dequeue;
+     FTokenRecord := tokenQueue.Dequeue;
      exit;
      end;
 
   skipBlanksAndComments;
 
   // Record the position of the token then is coming up
-  FTokenElement.lineNumber := FLineNumber;
-  FTokenElement.columnNumber := FColumnNumber;
+  FTokenRecord.lineNumber := FLineNumber;
+  FTokenRecord.columnNumber := FColumnNumber;
 
   case Fch of
      'a'..'z','A'..'Z','_' : getWord;
@@ -674,7 +683,7 @@ begin
 
      EOF_CHAR :
           begin
-          FTokenElement.Ftoken := tEndofStream;
+          FTokenRecord.Ftoken := tEndofStream;
           if InMultiLineComment then
              raise EScannerError.Create ('detected unterminated comment, expecting "*/"');
           exit;
@@ -686,7 +695,7 @@ begin
 end;
 
 
-procedure TScanner.pushBackToken (token : TTokenElement);
+procedure TScanner.pushBackToken (token : TTokenRecord);
 begin
   tokenQueue.Enqueue(token);
 end;
@@ -697,10 +706,10 @@ end;
 function TScanner.TokenToString (tokenCode : TTokenCode) : string;
 begin
   case tokenCode of
-        tIdentifier   : result := 'identifier <' + FTokenElement.FTokenString + '>';
-        tInteger      : result := 'integer <' + inttostr (FTokenElement.FTokenInteger) + '>';
-        tFloat        : result := 'float <' + floattostr (FTokenElement.FTokenFloat) + '>';
-        tString       : result := 'string "' + FTokenElement.FTokenString + '"';
+        tIdentifier   : result := 'identifier <' + FTokenRecord.FTokenString + '>';
+        tInteger      : result := 'integer <' + inttostr (FTokenRecord.FTokenInteger) + '>';
+        tFloat        : result := 'float <' + floattostr (FTokenRecord.FTokenFloat) + '>';
+        tString       : result := 'string "' + FTokenRecord.FTokenString + '"';
         tMinus        : result := 'special: ''-''';
         tPlus         : result := 'special: ''+''';
         tMult         : result := 'special: ''*''';
@@ -751,10 +760,10 @@ end;
 function TScanner.TokenLiteral : string;
 begin
   case token of
-       tIdentifier   : result := FTokenElement.FTokenString;
-       tInteger      : result := InttoStr (FTokenElement.FTokenInteger);
-       tFloat        : result := Format ('%g', [FTokenElement.FTokenFloat]);
-       tString       : result := FTokenElement.FTokenString;
+       tIdentifier   : result := FTokenRecord.FTokenString;
+       tInteger      : result := InttoStr (FTokenRecord.FTokenInteger);
+       tFloat        : result := Format ('%g', [FTokenRecord.FTokenFloat]);
+       tString       : result := FTokenRecord.FTokenString;
        tMinus        : result := '-';
        tPlus         : result := '+';
        tMult         : result := '*';
