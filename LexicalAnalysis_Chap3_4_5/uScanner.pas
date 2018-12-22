@@ -544,9 +544,7 @@ begin
         end;
 
   // Check if word is a keyword
-  if IsKeyWord (FTokenRecord.FTokenString, FTokenRecord.FToken) then
-     FTokenRecord.FToken := FTokenRecord.FToken
-  else
+  if not IsKeyWord (FTokenRecord.FTokenString, FTokenRecord.FToken) then
      FTokenRecord.FToken := tIdentifier;
 end;
 

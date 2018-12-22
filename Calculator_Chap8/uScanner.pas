@@ -548,9 +548,7 @@ begin
         Fch := nextchar;
         end;
 
-  if IsKeyWord (FTokenRecord.FTokenString, FTokenRecord.FToken) then
-     FTokenRecord.FToken := FTokenRecord.FToken
-  else
+  if not IsKeyWord (FTokenRecord.FTokenString, FTokenRecord.FToken) then
      FTokenRecord.FToken := tIdentifier;
 end;
 
