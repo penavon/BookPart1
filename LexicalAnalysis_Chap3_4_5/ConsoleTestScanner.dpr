@@ -1,5 +1,7 @@
 program ConsoleTestScanner;
 
+// *** Ths source is distributed under Apache 2.0 ***
+
 {$APPTYPE CONSOLE}
 
 {$R *.res}

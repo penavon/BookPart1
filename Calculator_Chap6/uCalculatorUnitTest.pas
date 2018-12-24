@@ -1,5 +1,7 @@
 unit uCalculatorUnitTest;
 
+// *** Ths source is distributed under Apache 2.0 ***
+
 interface
 uses
   SysUtils, DUnitX.TestFramework, uScanner, uSyntaxAnalysis;

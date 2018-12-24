@@ -1,5 +1,7 @@
 program ProjectUnitCalculatorTest;
 
+// *** Ths source is distributed under Apache 2.0 ***
+
 {$IFNDEF TESTINSIGHT}
 {$APPTYPE CONSOLE}
 {$ENDIF}{$STRONGLINKTYPES ON}

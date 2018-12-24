@@ -1,8 +1,7 @@
 unit uScannerUnitTest;
 
-// Uncovered bugs:
-// Can't parse .5
-// Doesn't detect CRCR, or CR
+// *** Ths source is distributed under Apache 2.0 ***
+
 interface
 
 uses

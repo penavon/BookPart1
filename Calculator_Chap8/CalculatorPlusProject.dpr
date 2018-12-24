@@ -8,6 +8,8 @@ program CalculatorPlusProject;
 // one described in Chapter 3. The one we use here supports
 // token lookahead.
 
+// *** Ths source is distributed under Apache 2.0 ***
+
 {$APPTYPE CONSOLE}
 
 {$R *.res}

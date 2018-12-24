@@ -4,6 +4,8 @@ unit uSymbolTable;
 
 // Writing an Interpreter for Object Pascal, Part 1
 
+// *** Ths source is distributed under Apache 2.0 ***
+
 interface
 
 Uses Generics.Collections;

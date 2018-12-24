@@ -1,5 +1,7 @@
 program ScannerGUIProject;
 
+// *** Ths source is distributed under Apache 2.0 ***
+
 uses
   Vcl.Forms,
   ufMain in 'ufMain.pas' {frmMain},
