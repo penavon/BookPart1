@@ -27,8 +27,8 @@ procedure displayWelcome;
 begin
   writeln ('Welcome to Rhodus Syntax Analysis Console, Version ', RHODUS_VERSION);
   writeln ('Data and Time: ', dateToStr (Date), ', ', timeToStr (Time));
-  writeln ('Only support expression, no assignment of variable names, e.g');
-  writeln ('2+3  4/(6-7)  4*3+8E-4*50');
+  writeln ('Only supports expressions, no assignment of variable names, e.g');
+  writeln ('2+3,  4/(6-7),  4*3+8E-4*50, 2^3, ---4');
   writeln ('Tyep quit to exit');
 end;
 

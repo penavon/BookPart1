@@ -31,6 +31,7 @@ type
     [TestCase ('TestKeyWord8', 'True,tTrue')]
     [TestCase ('TestKeyWord9', 'False,tFalse')]
     [TestCase ('TestKeyWord10', '=,tEquals')]
+    [TestCase ('TestKeyWord10', '==,tEquivalence')]
     [TestCase ('TestKeyWord11', '>,tMoreThan')]
     [TestCase ('TestKeyWord12', '>=,tMoreThanOrEqual')]
     [TestCase ('TestKeyWord13', '<,tLessThan')]
@@ -145,6 +146,12 @@ type
 
     [Test]   // Test for MALFORMED !=
     procedure TestNotEqualsToError;
+
+    [Test]   // Test for "String
+    procedure TestUnterminatedString;
+
+    [Test]    // Test for /* Fiish me
+    procedure TestUnterminatedComment;
   end;
 
 implementation
@@ -371,6 +378,18 @@ procedure TScannerTest.TestNotEqualsToError;
 begin
   sc.scanString('!x');
   Assert.WillRaise(procedure begin sc.nextToken; end, EScannerError, 'Expecting = after !');
+end;
+
+procedure TScannerTest.TestUnterminatedString;
+begin
+  sc.scanString('"String');
+  Assert.WillRaise(procedure begin sc.nextToken; end, EScannerError, 'Expecting terminating quation in string');
+end;
+
+procedure TScannerTest.TestUnterminatedComment;
+begin
+  sc.scanString('/* Finish me');
+  Assert.WillRaise(procedure begin sc.nextToken; end, EScannerError, 'Expecting closing comment symbol');
 end;
 
 initialization
