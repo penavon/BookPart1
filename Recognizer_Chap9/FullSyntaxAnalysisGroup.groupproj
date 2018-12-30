@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{8364CFFA-F138-480F-85C1-50819962825D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="FullSyntaxAnlaysisProject.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ProjectUnitCalculatorTest.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="FullSyntaxAnlaysisProject">
+        <MSBuild Projects="FullSyntaxAnlaysisProject.dproj"/>
+    </Target>
+    <Target Name="FullSyntaxAnlaysisProject:Clean">
+        <MSBuild Projects="FullSyntaxAnlaysisProject.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FullSyntaxAnlaysisProject:Make">
+        <MSBuild Projects="FullSyntaxAnlaysisProject.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ProjectUnitCalculatorTest">
+        <MSBuild Projects="ProjectUnitCalculatorTest.dproj"/>
+    </Target>
+    <Target Name="ProjectUnitCalculatorTest:Clean">
+        <MSBuild Projects="ProjectUnitCalculatorTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ProjectUnitCalculatorTest:Make">
+        <MSBuild Projects="ProjectUnitCalculatorTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="FullSyntaxAnlaysisProject;ProjectUnitCalculatorTest"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="FullSyntaxAnlaysisProject:Clean;ProjectUnitCalculatorTest:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="FullSyntaxAnlaysisProject:Make;ProjectUnitCalculatorTest:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -1,0 +1,12 @@
+
+x = not False;
+x = False and True;
+x = False or True;
+x = not (False or True);
+x = False xor True and True;
+x = y1 < y2 and x1 > x2;
+x = y1 >= y2 and not (y3 <= y4);
+x = (y1 != 6);
+x = y1 == 6;
+
+
