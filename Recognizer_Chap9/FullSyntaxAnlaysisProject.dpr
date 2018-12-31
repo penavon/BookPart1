@@ -1,9 +1,18 @@
 program FullSyntaxAnlaysisProject;
 
-// Source code related to the second half chapter 6 and 7 for the book:
+// Source code related to Chapter 9 for the book:
 // Writing an Interpreter in Object Pascal: Part 1
-// Uses a custom TScanner class comapred to the one describe in Chapter 3
 
+// Syntax Parser for calculator project
+
+// Developed under Delphi for Windows and Mac platforms.
+
+// *** Ths source is distributed under Apache 2.0 ***
+
+// Copyright (C) 2018 Herbert M Sauro
+
+// Author Contact Information:
+// email: hsauro@gmail.com
 
 {$APPTYPE CONSOLE}
 

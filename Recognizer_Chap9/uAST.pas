@@ -1,5 +1,9 @@
 unit uAST;
 
+// *** Ths source is distributed under Apache 2.0 ***
+// Copyright (C) 2018 Herbert M Sauro
+
+
 interface
 
 Uses Classes, SysUtils, Generics.Collections, uScanner;
