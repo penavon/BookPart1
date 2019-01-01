@@ -58,7 +58,7 @@ begin
 end;
 
 
-function runCommand (src : string) : boolean;
+function runCommand (const src : string) : boolean;
 var fileName, sdir : string;
 begin
    sdir := getSampleScriptsDir + '\';
@@ -88,7 +88,7 @@ begin
 end;
 
 
-procedure runCode (src : string);
+procedure runCode (const src : string);
 begin
    sc.scanString(src);
    try

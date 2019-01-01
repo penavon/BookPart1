@@ -19,12 +19,12 @@ type
    TSyntaxAnalysis = class (TObject)
          private
             sc : TScanner;
-            function  getIdentifierValue (name : string) : double;
+            function  getIdentifierValue (const name : string) : double;
             procedure expect (thisToken : TTokenCode);
             function  factor : double;
             function  power : double;
             function  term : double;
-            procedure assignment (variableName : string);
+            procedure assignment (const variableName : string);
           public
             procedure   statement;
             function    expression : double;
@@ -55,7 +55,7 @@ end;
 
 // Given the name of the symbol, return its value
 // If the symbol cannot be found raise an exception.
-function TSyntaxAnalysis.getIdentifierValue (name : string) : double;
+function TSyntaxAnalysis.getIdentifierValue (const name : string) : double;
 begin
    sc.nextToken;
    if symbolTable.ContainsKey (name) then
@@ -145,7 +145,7 @@ end;
 
 
 // assignment = expression
-procedure TSyntaxAnalysis.assignment (variableName : string);
+procedure TSyntaxAnalysis.assignment (const variableName : string);
 var value : double;
 begin
   value := expression;

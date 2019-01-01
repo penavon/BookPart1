@@ -51,19 +51,19 @@ type
     [TestCase ('TestKeyWord28', 'or,tOr')]
     [TestCase ('TestKeyWord27', 'not,tNOt')]
     [TestCase ('TestKeyWord28', 'xor,tXor')]
-    procedure TestSymbolRecognition (inputString : string; expectedToken : TTokenCode);
+    procedure TestSymbolRecognition (const inputString : string; expectedToken : TTokenCode);
 
     [Test] // Word
     [TestCase ('TestIdent1',  'ident,ident,tIdentifier')]
     [TestCase ('TestIdent2',  '_ident,_ident,tIdentifier')]
     [TestCase ('TestIdent3',  '_ident99,_ident99,tIdentifier')]
     [TestCase ('TestIdent3',  '_id_ent99,_id_ent99,tIdentifier')]
-    procedure TestIdentifierScanning (Value1 : string; Value2 : string; Value3 : TTokenCode);
+    procedure TestIdentifierScanning (const Value1, Value2 : string; Value3 : TTokenCode);
 
     [Test] // String
     [TestCase ('TestString',  '"string",string,tString')]
     [TestCase ('TestString',  '"",,tString')]
-    procedure TestStringScanning (Value1 : string; Value2 : string; Value3 : TTokenCode);
+    procedure TestStringScanning (const Value1, Value2 : string; Value3 : TTokenCode);
 
     [Test] // Tesing Escape Characters
     procedure TestStringEscapeCharacters_Newline;
@@ -76,7 +76,7 @@ type
     [TestCase ('TestInteger1', '25,25,tInteger')]
     [TestCase ('TestInteger2', '0,0,tInteger')]
     [TestCase ('TestInteger3', '0123,123,tInteger')]
-    procedure TestIntegerScanning (Value1 : string; Value2 : integer; Value3 : TTokenCode);
+    procedure TestIntegerScanning (const Value1 : string; Value2 : integer; Value3 : TTokenCode);
 
     [Test]  // Integer Overflow
     procedure TestIntOverflow;
@@ -90,7 +90,7 @@ type
     [TestCase ('TestFloat6', '1E-3,0.001,tFloat')]
     [TestCase ('TestFloat6', '1.234E-3,0.001234,tFloat')]
     [TestCase ('TestFloat7', '0.234E-3,0.000234,tFloat')]
-    procedure TestFloatingPoint (Value1 : string; Value2 : double; Value3 : TTokenCode);
+    procedure TestFloatingPoint (const Value1 : string; Value2 : double; Value3 : TTokenCode);
 
     [Test]
     procedure TestMissingExponent;
@@ -104,19 +104,19 @@ type
     [TestCase ('TestCRLF2', 'before'+#10+'after,before,after')]
     [TestCase ('TestCRLF3', 'before'+#10#10+'after,before,after')]
     [TestCase ('TestCRLF4', 'before'+#10#10#10+'after,before,after')]
-    procedure TestCRLF (Value1 : string; Value2, Value3 : string);
+    procedure TestCRLF (const Value1, Value2, Value3 : string);
 
     [Test] // Filter CRLF Exception Test, CR on its own
     [TestCase ('TestCRLFExc', 'before'+#13+'after')]
-    procedure TestCRLFException1 (Value1 : string);
+    procedure TestCRLFException1 (const Value1 : string);
 
     [Test] // Filter CRLF Exception Test, multiple CFs
     [TestCase ('TestCRLFExc', 'before'+#13#13+'after')]
-    procedure TestCRLFException2 (Value1 : string);
+    procedure TestCRLFException2 (const Value1 : string);
 
     [Test] // Filter CRLF Exception Test, multiple CFs
     [TestCase ('TestCRLFExc', 'before'+#13#13#13+'after')]
-    procedure TestCRLFException3 (Value1 : string);
+    procedure TestCRLFException3 (const Value1 : string);
 
     // Test sequence of tokens
     [Test]
@@ -173,7 +173,7 @@ begin
   sc.Free;
 end;
 
-procedure TScannerTest.TestSymbolRecognition (inputString : string;  expectedToken : TTokenCode);
+procedure TScannerTest.TestSymbolRecognition (const inputString : string;  expectedToken : TTokenCode);
 begin
   sc.scanString(inputString);
   sc.nextToken;
@@ -181,7 +181,7 @@ begin
 end;
 
 
-procedure TScannerTest.TestIdentifierScanning (Value1 : string; Value2 : string; Value3 : TTokenCode);
+procedure TScannerTest.TestIdentifierScanning (const Value1, Value2 : string; Value3 : TTokenCode);
 begin
   sc.scanString(Value1);
   sc.nextToken;
@@ -190,7 +190,7 @@ begin
 end;
 
 
-procedure TScannerTest.TestStringScanning (Value1 : string; Value2 : string; Value3 : TTokenCode);
+procedure TScannerTest.TestStringScanning (const Value1, Value2 : string; Value3 : TTokenCode);
 begin
   sc.scanString(Value1);
   sc.nextToken;
@@ -219,7 +219,7 @@ begin
   Assert.AreEqual (sc.tokenString, 'before'+TAB+'after');
 end;
 
-procedure TScannerTest.TestIntegerScanning (Value1 : string; Value2 : integer; Value3 : TTokenCode);
+procedure TScannerTest.TestIntegerScanning (const Value1 : string; Value2 : integer; Value3 : TTokenCode);
 begin
   sc.scanString(Value1);
   sc.nextToken;
@@ -256,7 +256,7 @@ begin
 end;
 
 
-procedure TScannerTest.TestFloatingPoint (Value1 : string; Value2 : double; Value3 : TTokenCode);
+procedure TScannerTest.TestFloatingPoint (const Value1 : string; Value2 : double; Value3 : TTokenCode);
 begin
   sc.scanString(Value1);
   sc.nextToken;
@@ -265,7 +265,7 @@ begin
 end;
 
 
-procedure TScannerTest.TestCRLF (Value1 : string; Value2, Value3 : string);
+procedure TScannerTest.TestCRLF (const Value1, Value2, Value3 : string);
 begin
   sc.scanString(Value1);
   sc.nextToken;
@@ -275,19 +275,19 @@ begin
  end;
 
 
-procedure TScannerTest.TestCRLFException1 (Value1 : string);
+procedure TScannerTest.TestCRLFException1 (const Value1 : string);
 begin
   sc.scanString(Value1);
   Assert.WillRaise(procedure begin sc.nextToken; end, EScannerError, 'A CR on its own is illegal');
  end;
 
-procedure TScannerTest.TestCRLFException2 (Value1 : string);
+procedure TScannerTest.TestCRLFException2 (const Value1 : string);
 begin
   sc.scanString(Value1);
   Assert.WillRaise(procedure begin sc.nextToken; end, EScannerError, 'Two CRs in a row, illegal');
  end;
 
-procedure TScannerTest.TestCRLFException3 (Value1 : string);
+procedure TScannerTest.TestCRLFException3 (const Value1 : string);
 begin
   sc.scanString(Value1);
   Assert.WillRaise(procedure begin sc.nextToken; end, EScannerError, 'Three CRs in a row, illegal');

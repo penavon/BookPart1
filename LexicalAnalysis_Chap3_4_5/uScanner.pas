@@ -136,7 +136,7 @@ type
                procedure getNumber;
                procedure getSpecial;
                procedure addKeyWords;
-               function  isKeyWord (FTokenString : string; var Token : TTokenCode) : boolean;
+               function  isKeyWord (const FTokenString : string; var Token : TTokenCode) : boolean;
 
                function getTokenCode : TTokenCode;
                function getTokenString : string;
@@ -157,8 +157,8 @@ type
                function  tokenToString (tokenCode : TTokenCode) : string; overload;
                function  tokenLiteral : string;
 
-               procedure scanString (str : string);
-               procedure scanFile (Filename : string);
+               procedure scanString (const str : string);
+               procedure scanFile (const Filename : string);
                // Returns token value whether its an integer or double
                function  getScalar : double;
                property  tokenRecord : TTokenRecord read FTokenRecord;
@@ -197,7 +197,7 @@ begin
 end;
 
 
-procedure TScanner.scanString (str : string);
+procedure TScanner.scanString (const str : string);
 begin
   freeAndNil(yyReader);
   // Use a reader because we'll have access to peek and endOfStream
@@ -207,7 +207,7 @@ begin
 end;
 
 
-procedure TScanner.scanFile (Filename : string);
+procedure TScanner.scanFile (const filename : string);
 begin
   freeAndNil (yyReader);
   yyReader := TStreamReader.Create(TBufferedFileStream.Create (filename, fmOpenRead), TEncoding.UTF8);
@@ -288,7 +288,7 @@ end;
 
 
 // If a keyword is found, it returns the corresponding token in argument Token
-function TScanner.isKeyWord (FTokenString : string; var Token : TTokenCode) : boolean;
+function TScanner.isKeyWord (const FTokenString : string; var Token : TTokenCode) : boolean;
 var index : integer;
 begin
   result := False;

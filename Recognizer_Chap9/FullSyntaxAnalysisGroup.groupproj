@@ -6,9 +6,6 @@
         <Projects Include="FullSyntaxAnlaysisProject.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="ProjectUnitCalculatorTest.dproj">
-            <Dependencies/>
-        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -26,23 +23,14 @@
     <Target Name="FullSyntaxAnlaysisProject:Make">
         <MSBuild Projects="FullSyntaxAnlaysisProject.dproj" Targets="Make"/>
     </Target>
-    <Target Name="ProjectUnitCalculatorTest">
-        <MSBuild Projects="ProjectUnitCalculatorTest.dproj"/>
-    </Target>
-    <Target Name="ProjectUnitCalculatorTest:Clean">
-        <MSBuild Projects="ProjectUnitCalculatorTest.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="ProjectUnitCalculatorTest:Make">
-        <MSBuild Projects="ProjectUnitCalculatorTest.dproj" Targets="Make"/>
-    </Target>
     <Target Name="Build">
-        <CallTarget Targets="FullSyntaxAnlaysisProject;ProjectUnitCalculatorTest"/>
+        <CallTarget Targets="FullSyntaxAnlaysisProject"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="FullSyntaxAnlaysisProject:Clean;ProjectUnitCalculatorTest:Clean"/>
+        <CallTarget Targets="FullSyntaxAnlaysisProject:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="FullSyntaxAnlaysisProject:Make;ProjectUnitCalculatorTest:Make"/>
+        <CallTarget Targets="FullSyntaxAnlaysisProject:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<test-results name="U:\Delphi\BookPart_1\LexicalAnalysis_Chap3_4_5\Win32\Debug\ProjectDUnitXTest.exe" total="73" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2018-12-22" time="0.023">
+<test-results name="U:\Delphi\BookPart_1\LexicalAnalysis_Chap3_4_5\Win32\Debug\ProjectDUnitXTest.exe" total="73" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2019-01-01" time="0.020">
   <culture-info current-culture="en" current-uiculture="en" />
-  <test-suite type="Assembly" name="ProjectDUnitXTest.exe" executed="true" result="Success" success="True" time="0.023" asserts="0">
+  <test-suite type="Assembly" name="ProjectDUnitXTest.exe" executed="true" result="Success" success="True" time="0.020" asserts="0">
     <results>
-        <test-suite type="Namespace" name="uScannerUnitTest" executed="true" result="Success" success="True" time="0.023" asserts="0" >
+        <test-suite type="Namespace" name="uScannerUnitTest" executed="true" result="Success" success="True" time="0.020" asserts="0" >
           <results>
-              <test-suite type="Fixture" name="TScannerTest" executed="True" result="Success" success="True" time="0.023" >
+              <test-suite type="Fixture" name="TScannerTest" executed="True" result="Success" success="True" time="0.020" >
                 <results>
                   <test-case name="TestSymbolRecognition.TestKeyWord1" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestSymbolRecognition.TestKeyWord2" executed="True" result="Success" success="True" time="0.000" asserts="0" />
@@ -50,7 +50,7 @@
                   <test-case name="TestIntegerScanning.TestInteger1" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestIntegerScanning.TestInteger2" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestIntegerScanning.TestInteger3" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestIntOverflow" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                  <test-case name="TestIntOverflow" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestFloatingPoint.TestFloat1" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestFloatingPoint.TestFloat2" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestFloatingPoint.TestFloat3" executed="True" result="Success" success="True" time="0.000" asserts="0" />
@@ -62,7 +62,7 @@
                   <test-case name="TestMissingExponent" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestExponentOverflow" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestExponentPeriod" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestCRLF.TestCRLF1" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCRLF.TestCRLF1" executed="True" result="Success" success="True" time="0.001" asserts="0" />
                   <test-case name="TestCRLF.TestCRLF2" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestCRLF.TestCRLF3" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestCRLF.TestCRLF4" executed="True" result="Success" success="True" time="0.000" asserts="0" />

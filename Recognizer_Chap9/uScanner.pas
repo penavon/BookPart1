@@ -153,7 +153,7 @@ type
                procedure getNumber;
                procedure getSpecial;
                procedure addKeyWords;
-               function  isKeyWord (FTokenString : string; var Token : TTokenCode) : boolean;
+               function  isKeyWord (const FTokenString : string; var Token : TTokenCode) : boolean;
 
                function getTokenCode : TTokenCode;
                function getTokenString : string;
@@ -170,8 +170,8 @@ type
                function  tokenLiteral : string;
                function  getScalar : double;
 
-               procedure scanString (str : string);
-               procedure scanFile (Filename : string);
+               procedure scanString (const str : string);
+               procedure scanFile (const filename : string);
                property  tokenElement : TTokenRecord read FTokenRecord;
                property  token : TTokenCode read getTokenCode;
                property  tokenString : string read getTokenString;
@@ -211,7 +211,7 @@ begin
 end;
 
 
-procedure TScanner.scanString (str : string);
+procedure TScanner.scanString (const str : string);
 begin
   freeAndNil(yyReader);
   // Use a reader because we'll have access to peek if we need it
@@ -221,7 +221,7 @@ begin
 end;
 
 
-procedure TScanner.scanFile (Filename : string);
+procedure TScanner.scanFile (const filename : string);
 begin
   freeAndNil (yyReader);
   yyReader := TStreamReader.Create(TBufferedFileStream.Create (filename, fmOpenRead), TEncoding.UTF8);
@@ -301,7 +301,7 @@ begin
 end;
 
 
-function TScanner.isKeyWord (FTokenString : string; var Token : TTokenCode) : boolean;
+function TScanner.isKeyWord (const FTokenString : string; var Token : TTokenCode) : boolean;
 var index : integer;
 begin
   result := False;
