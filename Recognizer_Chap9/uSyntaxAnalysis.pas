@@ -108,7 +108,8 @@ begin
              tLeftParenthesis :
                 begin
                 sc.nextToken;
-                expressionList;
+                if sc.token <> tRightParenthesis then
+                   expressionList;
                 expect (tRightParenthesis);
                 end;
              tLeftBracket :
