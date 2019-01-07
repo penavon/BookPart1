@@ -26,8 +26,7 @@ uses
   Math,
   IOUtils,
   uScanner in 'uScanner.pas',
-  uSyntaxAnalysis in 'uSyntaxAnalysis.pas',
-  uAST in 'uAST.pas';
+  uSyntaxAnalysis in 'uSyntaxAnalysis.pas';
 
 const
    RHODUS_VERSION = '1.0';

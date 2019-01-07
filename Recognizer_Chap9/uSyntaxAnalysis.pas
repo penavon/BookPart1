@@ -20,7 +20,7 @@ unit uSyntaxAnalysis;
 
 interface
 
-Uses Classes, SysUtils, uScanner, uAST;
+Uses Classes, SysUtils, uScanner;
 
 type
    TSyntaxAnalysis = class (TObject)
