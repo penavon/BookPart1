@@ -420,7 +420,6 @@ end;
 procedure TSyntaxAnalysis.breakStmt;
 begin
   sc.nextToken;
-  expect (tSemicolon);
 end;
 
 
