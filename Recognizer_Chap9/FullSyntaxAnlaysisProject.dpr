@@ -40,7 +40,7 @@ var sourceCode : string;
 
 procedure displayWelcome;
 begin
-  writeln ('Welcome to Rhodus Syntax Analysis Console, Version ', RHODUS_VERSION);
+  writeln ('Welcome to Rhodus Recognizer Console, Version ', RHODUS_VERSION);
   writeln ('Data and Time: ', dateToStr (Date), ', ', timeToStr (Time));
   writeln ('Type quit to exit. Other commands: list, run, edit, dir');
 end;
