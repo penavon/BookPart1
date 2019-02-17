@@ -4,8 +4,10 @@ You will find a project group in each of the folders. Load the project group not
 
 The various project groups include:
 
-RhodusLexicalGroup.groupproj      in folder LexicalAnalysis_Chap3_4_5
-SyntaxAnalysisGroup.groupproj     in folder SyntaxAnalysis_Chap6_7
-CalculatorGroup.groupproj         in folder Calculator_Chap6
-CalculatorChapter8.groupproj      in folder Calculator_Chap8
-FullSyntaxAnalysisGroup.groupproj in folder Recognizer_Chap9
+| Group File Name | In Folder |
+-------|--------|
+|1. RhodusLexicalGroup.groupproj  |  LexicalAnalysis_Chap3_4_5  |
+|2. SyntaxAnalysisGroup.groupproj |  SyntaxAnalysis_Chap6_7   |
+|3. CalculatorGroup.groupproj     |  Calculator_Chap6 |
+|4. CalculatorChapter8.groupproj  | Calculator_Chap8 |
+|5. FullSyntaxAnalysisGroup.groupproj | Recognizer_Chap9 |
