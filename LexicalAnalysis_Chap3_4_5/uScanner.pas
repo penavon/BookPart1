@@ -136,7 +136,7 @@ type
                procedure getNumber;
                procedure getSpecial;
                procedure addKeyWords;
-               function  isKeyWord (const FTokenString : string; var Token : TTokenCode) : boolean;
+               function  isKeyWord (const tokenString : string; var Token : TTokenCode) : boolean;
 
                function getTokenCode : TTokenCode;
                function getTokenString : string;
@@ -288,11 +288,11 @@ end;
 
 
 // If a keyword is found, it returns the corresponding token in argument Token
-function TScanner.isKeyWord (const FTokenString : string; var Token : TTokenCode) : boolean;
+function TScanner.isKeyWord (const tokenString : string; var Token : TTokenCode) : boolean;
 var index : integer;
 begin
   result := False;
-  if FKeyWordList.Find(FTokenString, index) then
+  if FKeyWordList.Find(tokenString, index) then
      begin
      Token := TTokenCode (FKeyWordList.Objects[Index]);
      exit (True);

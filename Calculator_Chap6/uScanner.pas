@@ -151,7 +151,7 @@ type
                procedure getNumber;
                procedure getSpecial;
                procedure addKeyWords;
-               function  isKeyWord (FTokenString : string; var Token : TTokenCode) : boolean;
+               function  isKeyWord (tokenString : string; var Token : TTokenCode) : boolean;
 
                function getTokenCode : TTokenCode;
                function getTokenString : string;
@@ -296,11 +296,11 @@ begin
 end;
 
 
-function TScanner.isKeyWord (FTokenString : string; var Token : TTokenCode) : boolean;
+function TScanner.isKeyWord (tokenString : string; var Token : TTokenCode) : boolean;
 var index : integer;
 begin
   result := False;
-  if FKeyWordList.Find(FTokenString, index) then
+  if FKeyWordList.Find(tokenString, index) then
      begin
      Token := TTokenCode (FKeyWordList.Objects[Index]);
      exit (True);
