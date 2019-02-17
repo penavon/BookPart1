@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<test-results name="U:\Delphi\BookPart_1\Calculator_Chap6\Win32\Debug\ProjectUnitCalculatorTest.exe" total="48" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2018-12-22" time="0.008">
+<test-results name="U:\Delphi\BookPart_1\Calculator_Chap6\Win32\Debug\ProjectUnitCalculatorTest.exe" total="48" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2019-02-16" time="0.009">
   <culture-info current-culture="en" current-uiculture="en" />
-  <test-suite type="Assembly" name="ProjectUnitCalculatorTest.exe" executed="true" result="Success" success="True" time="0.008" asserts="0">
+  <test-suite type="Assembly" name="ProjectUnitCalculatorTest.exe" executed="true" result="Success" success="True" time="0.009" asserts="0">
     <results>
-        <test-suite type="Namespace" name="uCalculatorUnitTest" executed="true" result="Success" success="True" time="0.007" asserts="0" >
+        <test-suite type="Namespace" name="uCalculatorUnitTest" executed="true" result="Success" success="True" time="0.009" asserts="0" >
           <results>
-              <test-suite type="Fixture" name="TCalculatorTest" executed="True" result="Success" success="True" time="0.007" >
+              <test-suite type="Fixture" name="TCalculatorTest" executed="True" result="Success" success="True" time="0.009" >
                 <results>
-                  <test-case name="TestCalculator.Test1" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test1" executed="True" result="Success" success="True" time="0.001" asserts="0" />
                   <test-case name="TestCalculator.Test2" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestCalculator.Test3" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestCalculator.Test4" executed="True" result="Success" success="True" time="0.000" asserts="0" />
@@ -22,7 +22,7 @@
                   <test-case name="TestCalculator.Test13" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestCalculator.Test14" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestCalculator.Test15" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestCalculator.Test16" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestCalculator.Test16" executed="True" result="Success" success="True" time="0.001" asserts="0" />
                   <test-case name="TestCalculator.Test17" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestCalculator.Test18" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestCalculator.Test19" executed="True" result="Success" success="True" time="0.000" asserts="0" />
@@ -52,7 +52,7 @@
                   <test-case name="TestCalculator.Test43" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestDivideByZero" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestUnbalancedParentheses" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="Test_two_stars" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                  <test-case name="Test_two_stars" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="Test_two_hats" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="Test_two_3_" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                 </results>

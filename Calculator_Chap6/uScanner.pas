@@ -133,7 +133,7 @@ type
                FKeyWordList : TStringList;
                FLineNumber : integer;
                FColumnNumber : integer;
-               yyReader : TStreamReader;
+               FStreamReader : TStreamReader;
 
                procedure startScanner;
                procedure skipBlanksAndComments;
@@ -203,7 +203,7 @@ end;
 destructor TScanner.Destroy;
 begin
   FKeyWordList.Free;
-  freeAndNil(yyReader); // yyReader owns stream so stream will be freeed too.
+  freeAndNil(FStreamReader); // yyReader owns stream so stream will be freeed too.
   aQueue.Free;
   inherited Destroy;
 end;
@@ -211,19 +211,19 @@ end;
 
 procedure TScanner.scanString (str : string);
 begin
-  freeAndNil(yyReader);
+  freeAndNil(FStreamReader);
   // Use a reader because we'll have access to peek if we need it
-  yyReader := TStreamReader.Create(TStringStream.Create (str, TEncoding.UTF8));
-  yyReader.OwnStream;
+  FStreamReader := TStreamReader.Create(TStringStream.Create (str, TEncoding.UTF8));
+  FStreamReader.OwnStream;
   startScanner;
 end;
 
 
 procedure TScanner.scanFile (Filename : string);
 begin
-  freeAndNil (yyReader);
-  yyReader := TStreamReader.Create(TBufferedFileStream.Create (filename, fmOpenRead), TEncoding.UTF8);
-  yyReader.OwnStream;
+  freeAndNil (FStreamReader);
+  FStreamReader := TStreamReader.Create(TBufferedFileStream.Create (filename, fmOpenRead), TEncoding.UTF8);
+  FStreamReader.OwnStream;
   startScanner;
 end;
 
@@ -311,18 +311,18 @@ end;
 // get a single char from the input stream
 function TScanner.readRawChar : Char;
 begin
-  if yyReader = nil then
+  if FStreamReader = nil then
      exit (char (EOF_CHAR));
 
-  if yyReader.EndOfStream  then
+  if FStreamReader.EndOfStream  then
      begin
-     FreeAndNil (yyReader);
+     FreeAndNil (FStreamReader);
      result := char (EOF_CHAR);
      end
   else
      begin
      inc (FColumnNumber);
-     result := Char (yyReader.Read);
+     result := Char (FStreamReader.Read);
      end;
 end;
 
@@ -406,7 +406,7 @@ begin
         else
            begin
            // Check for start of comment
-           if (char (yyReader.Peek) = '/') or (char (yyReader.Peek) = '*') then
+           if (char (FStreamReader.Peek) = '/') or (char (FStreamReader.Peek) = '*') then
               begin
               Fch := getOS_IndependentChar;
               if Fch = '/' then // This kind of comment  // abc - single line
@@ -610,16 +610,16 @@ begin
      '{'  : FTokenRecord.Ftoken := tLeftCurleyBracket;
      '}'  : FTokenRecord.Ftoken := tRightCurleyBracket;
      '!'  : begin
-            if Char (yyReader.Peek) = '=' then
+            if Char (FStreamReader.Peek) = '=' then
                begin
                Fch := nextChar;
                FTokenRecord.Ftoken := tNotEqual;
                end
             else
-              raise EScannerError.Create ('unexpecting ''='' character after explanation point: ' + Fch);
+              raise EScannerError.Create ('expecting ''='' character after explanation point: ' + Fch);
             end;
      '>'  : begin
-            if  Char (yyReader.Peek) = '=' then
+            if  Char (FStreamReader.Peek) = '=' then
                begin
                Fch := nextChar;
                FTokenRecord.Ftoken := tMoreThanOrEqual;
@@ -629,7 +629,7 @@ begin
             end;
 
      '<'  : begin
-            if Char (yyReader.Peek) = '=' then
+            if Char (FStreamReader.Peek) = '=' then
                begin
                Fch := nextChar;
                FTokenRecord.Ftoken := tLessThanOrEqual;
@@ -639,7 +639,7 @@ begin
             end;
 
        '='  : begin
-            if Char (yyReader.Peek) = '=' then
+            if Char (FStreamReader.Peek) = '=' then
                begin
                Fch := nextChar;
                FTokenRecord.Ftoken := tEquivalence;
